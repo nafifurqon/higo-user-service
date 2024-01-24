@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema(
     no_telp: {
       type: String,
     },
-    brand_digital: {
+    brand_device: {
       type: String,
     },
     digital_interest: {

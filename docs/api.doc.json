@@ -151,6 +151,194 @@
 					}
 				}
 			}
+		},
+		"/users/segment": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"summary": "Get user segment",
+				"description": "Get user segment base on age, gender, brand device, and digital interest",
+				"operationId": "getUserSegment",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "success"
+										},
+										"message": {
+											"type": "string",
+											"example": "Successfully get user by id"
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"gender": {
+													"type": "object",
+													"properties": {
+														"female": {
+															"type": "number",
+															"format": "double",
+															"example": 52.2
+														},
+														"male": {
+															"type": "number",
+															"format": "double",
+															"example": 47.8
+														}
+													}
+												},
+												"brand_device": {
+													"type": "object",
+													"properties": {
+														"samsung": {
+															"type": "number",
+															"format": "double",
+															"example": 12.012387612387613
+														},
+														"lg": {
+															"type": "number",
+															"format": "double",
+															"example": 7.992707292707292
+														},
+														"nokia": {
+															"type": "number",
+															"format": "double",
+															"example": 7.984715284715286
+														},
+														"motorola": {
+															"type": "number",
+															"format": "double",
+															"example": 7.988711288711289
+														},
+														"oneplus": {
+															"type": "number",
+															"format": "double",
+															"example": 7.995904095904096
+														},
+														"sony": {
+															"type": "number",
+															"format": "double",
+															"example": 8.016783216783217
+														},
+														"google": {
+															"type": "number",
+															"format": "double",
+															"example": 12.038061938061938
+														},
+														"apple": {
+															"type": "number",
+															"format": "double",
+															"example": 11.97892107892108
+														},
+														"xiaomi": {
+															"type": "number",
+															"format": "double",
+															"example": 11.976023976023976
+														},
+														"huawei": {
+															"type": "number",
+															"format": "double",
+															"example": 12.015784215784215
+														}
+													}
+												},
+												"digital_interest": {
+													"type": "object",
+													"properties": {
+														"podcast": {
+															"type": "number",
+															"format": "double",
+															"example": 12.44095904095904
+														},
+														"e-commerce": {
+															"type": "number",
+															"format": "double",
+															"example": 12.538461538461537
+														},
+														"news": {
+															"type": "number",
+															"format": "double",
+															"example": 12.527172827172828
+														},
+														"social_media": {
+															"type": "number",
+															"format": "double",
+															"example": 12.493706293706294
+														},
+														"sport": {
+															"type": "number",
+															"format": "double",
+															"example": 12.528371628371628
+														},
+														"music": {
+															"type": "number",
+															"format": "double",
+															"example": 12.485114885114886
+														}
+													}
+												},
+												"age": {
+													"type": "object",
+													"properties": {
+														"25_until_34": {
+															"type": "number",
+															"format": "double",
+															"example": 22.400000000000002
+														},
+														"45_until_64": {
+															"type": "number",
+															"format": "double",
+															"example": 44.5
+														},
+														"18_until_24": {
+															"type": "number",
+															"format": "double",
+															"example": 9.700000000000001
+														},
+														"35_until_44": {
+															"type": "number",
+															"format": "double",
+															"example": 23.400000000000002
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "user not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "failed"
+										},
+										"message": {
+											"type": "string",
+											"example": "user is not found"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

@@ -1,0 +1,153 @@
+{
+	"openapi": "3.0.3",
+  "info": {
+    "title": "Higo User Service",
+    "description": "This is API to get some data about users",
+    "contact": {
+      "email": "nafifurqon@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+		{
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about user"
+    }
+  ],
+	"paths": {
+		"api/v1/users/{userId}": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"summary": "Find user by id",
+				"description": "Find user by id. Must be provide id.",
+				"operationId": "findUserById",
+				"parameters": [
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "ID of user to return",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"description": "unique object id"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "success"
+										},
+										"message": {
+											"type": "string",
+											"example": "Successfully get user by id"
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"_id": {
+													"type": "string",
+													"example": "65b076b0d5bbe9d7b2f9804c"
+												},
+												"nomor": {
+													"type": "integer",
+													"format": "int32",
+													"example": 2
+												},
+												"name_of_location": {
+													"type": "string",
+													"example": "Barrel & Brew"
+												},
+												"date": {
+													"type": "string",
+													"format": "date-time",
+													"example": "2023-12-06T17:00:00.000Z"
+												},
+												"login_hour": {
+													"type": "string",
+													"format": "time",
+													"example": "16:25"
+												},
+												"name": {
+													"type": "string",
+													"example": "Maximilian Benezeit"
+												},
+												"age": {
+													"type": "integer",
+													"format": "int32",
+													"example": 1970
+												},
+												"gender": {
+													"type": "string",
+													"example": "Male"
+												},
+												"email": {
+													"type": "string",
+													"example": "mbenezeit1@nymag.com"
+												},
+												"no_telp": {
+													"type": "string",
+													"example": "132-881-9144"
+												},
+												"brand_digital": {
+													"type": "string",
+													"example": "Samsung"
+												},
+												"digital_interest": {
+													"type": "string",
+													"example": "Social Media"
+												},
+												"location_type": {
+													"type": "string",
+													"example": "sub urban"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "user not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "failed"
+										},
+										"message": {
+											"type": "string",
+											"example": "user is not found"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

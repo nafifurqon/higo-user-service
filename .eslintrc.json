@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": "airbnb-base",
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "eqeqeq": "off",
+        "camelcase": "error",
+        "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
+        "no-unused-vars": "off",
+        "no-continue": "off",
+        "max-len": "off",
+        "no-await-in-loop": "off",
+        "no-plusplus": "off",
+        "no-param-reassign": "off",
+        "radix": "off"
+    }
+}

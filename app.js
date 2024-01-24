@@ -19,8 +19,8 @@ app.use(cookieParser());
 
 const apiPrefix = config.api_prefix || '/api/v1';
 
-app.use(`${apiPrefix}/`, indexRouter);
-app.use(`${apiPrefix}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use(`${apiPrefix}/`, indexRouter);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(`${apiPrefix}/users`, usersRouter);
 
 module.exports = app;

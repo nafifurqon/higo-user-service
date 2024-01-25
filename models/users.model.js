@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema(
     name_of_location: {
       type: String,
     },
-    date: {
+    login_date: {
       type: Date,
     },
     login_hour: {

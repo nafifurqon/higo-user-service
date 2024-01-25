@@ -147,6 +147,222 @@ const controller = {
       });
     }
   },
+  async getSummary(req, res) {
+    try {
+      const [
+        uniqueUserPerDayData,
+        uniqueUserData,
+        newAndReturningPerDayOneToNineteenData,
+        newAndReturningPerDayTwentyToThirtyData,
+        newAndReturningData,
+        crowdedDayData,
+        crowdedHourData,
+        totalData,
+      ] = await Promise.all([
+        User.aggregate([
+          {
+            $group: {
+              _id: {
+                login_date: '$login_date',
+                email: '$email',
+              },
+            },
+          },
+          {
+            $group: {
+              _id: '$_id.login_date',
+              total: { $sum: 1 },
+            },
+          },
+        ]),
+        User.aggregate([
+          {
+            $group: {
+              _id: '$email',
+            },
+          },
+          {
+            $count: 'count',
+          },
+        ]),
+        User.aggregate([
+          {
+            $match: {
+              login_date: {
+                $gte: new Date('2023-11-30'),
+                $lte: new Date('2023-12-19'),
+              },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                login_date: '$login_date',
+                email: '$email',
+                name_of_location: '$name_of_location',
+                location_type: '$location_type',
+              },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $match: {
+              count: { $gt: 1 },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                login_date: '$_id.login_date',
+              },
+              total: { $sum: 1 },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              login_date: '$_id.login_date',
+              total: 1,
+            },
+          },
+        ], { allowDiskUse: true }),
+        User.aggregate([
+          {
+            $match: {
+              login_date: {
+                $gte: new Date('2023-12-20'),
+                $lte: new Date('2023-12-30'),
+              },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                login_date: '$login_date',
+                email: '$email',
+                name_of_location: '$name_of_location',
+                location_type: '$location_type',
+              },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $match: {
+              count: { $gt: 1 },
+            },
+          },
+          {
+            $group: {
+              _id: {
+                login_date: '$_id.login_date',
+              },
+              total: { $sum: 1 },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              login_date: '$_id.login_date',
+              total: 1,
+            },
+          },
+        ], { allowDiskUse: true }),
+        User.aggregate([
+          {
+            $group: {
+              _id: {
+                email: '$email',
+                name_of_location: '$name_of_location',
+                location_type: '$location_type',
+              },
+              count: { $sum: 1 },
+            },
+          },
+          {
+            $match: {
+              count: { $gt: 1 },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              count: { $sum: '$count' },
+            },
+          },
+        ], { allowDiskUse: true }),
+        User.aggregate([
+          {
+            $group: {
+              _id: '$login_date',
+              total_users: { $sum: 1 },
+            },
+          },
+          {
+            $sort: {
+              total_users: -1,
+            },
+          },
+          {
+            $limit: 1,
+          },
+          {
+            $project: {
+              _id: 0,
+              most_crowded_day: '$_id',
+              total_users: 1,
+            },
+          },
+        ]),
+        User.aggregate([
+          {
+            $group: {
+              _id: '$login_hour',
+              total_users: { $sum: 1 },
+            },
+          },
+          {
+            $sort: {
+              total_users: -1,
+            },
+          },
+          {
+            $limit: 1,
+          },
+          {
+            $project: {
+              _id: 0,
+              most_crowded_hour: '$_id',
+              total_users: 1,
+            },
+          },
+        ]),
+        User.aggregate([{
+          $count: 'count',
+        }]),
+      ]);
+
+      return res.status(200).json({
+        status: ResponseStatus.Success,
+        message: 'Succefully get user summary',
+        data: {
+          unique_user_per_day: uniqueUserPerDayData,
+          total_unique_user: uniqueUserData[0].count,
+          most_crowded_day: crowdedDayData[0].most_crowded_day,
+          most_crowded_hour: crowdedHourData[0].most_crowded_hour,
+          total_data: totalData[0].count,
+          new_and_returning_per_day: newAndReturningPerDayOneToNineteenData.concat(newAndReturningPerDayTwentyToThirtyData),
+          total_new_and_returning: newAndReturningData[0].count,
+        },
+      });
+    } catch (error) {
+      console.error('Failed get user summary: ', error.message);
+      return res.status(500).json({
+        status: ResponseStatus.Failed,
+        message: 'INTERNAL SERVER ERROR.',
+        errors: [error.message],
+      });
+    }
+  },
 };
 
 module.exports = controller;

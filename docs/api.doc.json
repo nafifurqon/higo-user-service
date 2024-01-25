@@ -215,6 +215,113 @@
 				}
 			}
 		},
+		"/users/summary": {
+			"get": {
+				"tags": [
+					"user"
+				],
+				"summary": "Get user summary",
+				"description": "Get user summary",
+				"operationId": "getUserSummary",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "success"
+										},
+										"message": {
+											"type": "string",
+											"example": "Successfully get user by id"
+										},
+										"data": {
+											"type": "object",
+											"properties": {
+												"unique_user_per_day": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"date": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"total": {
+																"type": "number",
+																"format": "double"
+															}
+														}
+													}
+												},
+												"total_unique_user": {
+													"type": "integer",
+													"format": "int32"
+												},
+												"most_crowded_day": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"most_crowded_hour": {
+													"type": "string"
+												},
+												"total_data": {
+													"type": "integer",
+													"format": "int32"
+												},
+												"new_and_returning_per_day": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"properties": {
+															"total": {
+																"type": "number"
+															},
+															"login_date": {
+																"type": "string",
+																"format": "date-time"
+															}
+														}
+													}
+												},
+												"total_new_and_returning": {
+													"type": "number"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "user not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "string",
+											"example": "failed"
+										},
+										"message": {
+											"type": "string",
+											"example": "user is not found"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/users/{userId}": {
 			"get": {
 				"tags": [
